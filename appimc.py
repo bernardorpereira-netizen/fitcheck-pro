@@ -1,3 +1,4 @@
+from views.qrcode_modal import QRCodeModal
 import os
 import sys
 
@@ -536,9 +537,13 @@ from views.qrcode_modal import QRCodeModal
 
 # Dentro do método _build_ui() da MainWindow, adicione o botão no Header:
 def _build_ui(self):
-    self.header = ctk.CTkFrame(self, fg_color="#161B22", height=70, corner_radius=0)
+    # 1. Cabeçalho (Header) no topo do aplicativo
+    self.header = ctk.CTkFrame(
+        self, fg_color="#161B22", height=70, corner_radius=0
+    )
     self.header.pack(fill="x", side="top")
 
+    # Título/Logo do lado esquerdo
     self.lbl_logo = ctk.CTkLabel(
         self.header,
         text="FITCHECK PRO",
@@ -547,29 +552,31 @@ def _build_ui(self):
     )
     self.lbl_logo.pack(side="left", padx=30)
 
-    # BOTÃO COMPARTILHAR ADICIONADO AQUI
+    # --- BOTÃO COMPARTILHAR (Fica no canto superior direito) ---
     self.btn_share = ctk.CTkButton(
         self.header,
         text="📲 COMPARTILHAR",
-        font=("Inter", 11, "bold"),
+        font=("Inter", 12, "bold"),
         fg_color="#1F2937",
         hover_color="#374151",
-        width=120,
-        height=32,
-        command=self._open_share_qr,
+        width=130,
+        height=35,
+        command=self._open_share_qr,  # Abre o QR Code ao clicar
     )
-    self.btn_share.pack(side="right", padx=(0, 20))
+    self.btn_share.pack(side="right", padx=20)
 
+    # Status / Nome do Usuário ao lado do botão
     self.lbl_user = ctk.CTkLabel(
         self.header,
         text="🔒 Faça Login para começar",
-        font=("Inter", 14, "bold"),
+        font=("Inter", 13, "bold"),
         text_color="#9CA3AF",
     )
     self.lbl_user.pack(side="right", padx=10)
 
 # Crie o método de abertura do modal dentro da MainWindow:
 def _open_share_qr(self):
-    # Substitua a URL abaixo pelo link real do seu repositório ou arquivo hospedado
-    link_download = "https://github.com/seu-usuario/fitcheck-pro/releases"
+    link_download = (
+        "https://github.com/bernardorpereira-netizen/fitcheck-pro"
+    )
     QRCodeModal(self, download_url=link_download)
